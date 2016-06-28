@@ -20,6 +20,7 @@ class TodoList extends React.Component {
                     <tbody>
                         <Todo title="Shopping">Milk</Todo>
                         <Todo title="Hair cut">13:00</Todo>
+                        <Todo>15:00</Todo>
                     </tbody>
                 </table>
             </div>
@@ -31,15 +32,16 @@ class Todo extends React.Component {
       // Write code here
     render(){
         return (
-            <div className="todoBox">
-                <tr>
-                    <td style={{border: "1px solid black"}}> {this.props.title}</td>
-                    <td style={{border: "1px solid black"}}> {this.props.children}</td>
-                </tr>
-            </div>
+            <tr>
+                <td style={{border: "1px solid black"}}> {this.props.title}</td>
+                <td style={{border: "1px solid black"}}> {this.props.children}</td>
+            </tr>
         );
     }
 }
+Todo.propTypes = {
+    title: React.PropTypes.string.isRequired
+};
     
 class TodoForm extends React.Component {
       // Omitted
