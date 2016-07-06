@@ -15,12 +15,13 @@ export default class TodoBox extends React.Component {
 class TodoList extends React.Component {
     render() {
         var todo = this.props.data.map(function(obj){
-          if(todo.state.checked == true){
-              return <Todo title={obj.title} key={obj.title} style={style.checkedTodo}>{obj.detail}</Todo>
-          } else{
-              return <Todo title={obj.title} key={obj.title} style={style.notCheckedTodo}>{obj.detail}</Todo>
-          }
-
+          // below is my solution to the problem, but this can also be done below in the constructor section -- see the correct answer according to the tutorial below
+          // if(todo.state.checked == true){
+          //     return <Todo title={obj.title} key={obj.title} style={style.checkedTodo}>{obj.detail}</Todo>
+          // } else{
+          //     return <Todo title={obj.title} key={obj.title} style={style.notCheckedTodo}>{obj.detail}</Todo>
+          // }
+            return <Todo title={obj.title} key={obj.title}>{obj.detail}</Todo>
         });
         return (
             <div className="todoList">
@@ -40,16 +41,36 @@ class Todo extends React.Component {
         super(props);
         this.state = {
             checked: false
+            // this is the tutorials solution -- put the line below under constructor and then change the handleChange below
+            TodoStyle = style.notCheckedTodo
         };
         this.handleChange = this.handleChange.bind(this);
     }
-    handleChange(){
-        this.setState({checked: !this.state.checked});
+    //this is how the handleChange used to look before the tutorials solution
+    // handleChange(){
+    //     this.setState({checked: !this.state.checked});
+    // }
+
+    //this is the new handleChange function according to the tutorial solution
+    handleChange(e){
+        this.setState({
+          checked: e.target.checked
+        });
+        if(e.target.checked){
+          this.setState({
+            TodoStyle: style.checkedTodo
+          });
+        } else{
+          this.setState({
+            TodoStyle: style.notCheckedTodo
+          });
+        }
     }
 
     render(){
         return (
-            <tr>
+          //the way i did it just has this as <tr> -- the way it looks below is how it should look according to the tutorial
+            <tr style={this.state.TodoStyle}>
                 <td style={style.tableRow}>
                     <input type="checkbox" checked={this.state.checked} onChange={this.handleChange}/>
                 </td>
