@@ -1,5 +1,5 @@
 import React from 'react';
-    
+
 export default class TodoBox extends React.Component {
     render() {
           return (
@@ -11,11 +11,16 @@ export default class TodoBox extends React.Component {
         );
     }
 }
-    
+
 class TodoList extends React.Component {
     render() {
         var todo = this.props.data.map(function(obj){
-            return <Todo title={obj.title} key={obj.title}>{obj.detail}</Todo>
+          if(todo.state.checked == true){
+              return <Todo title={obj.title} key={obj.title} style={style.checkedTodo}>{obj.detail}</Todo>
+          } else{
+              return <Todo title={obj.title} key={obj.title} style={style.notCheckedTodo}>{obj.detail}</Todo>
+          }
+
         });
         return (
             <div className="todoList">
@@ -28,7 +33,7 @@ class TodoList extends React.Component {
         );
     }
 }
-    
+
 class Todo extends React.Component {
     // Write code here
     constructor(props){
@@ -45,7 +50,7 @@ class Todo extends React.Component {
     render(){
         return (
             <tr>
-                <td style={style.tableRow}> 
+                <td style={style.tableRow}>
                     <input type="checkbox" checked={this.state.checked} onChange={this.handleChange}/>
                 </td>
                 <td style={style.tableRow}>{this.props.title}</td>
@@ -58,7 +63,7 @@ Todo.propTypes = {
     title: React.PropTypes.string.isRequired
 };
 
-    
+
 class TodoForm extends React.Component {
       // Omitted
     render(){
@@ -71,8 +76,14 @@ class TodoForm extends React.Component {
 }
 
 let style = {
+  checkedTodo: {
+    textDecoration: "line-through"
+  },
+  notCheckedTodo: {
+    textDecoration: "none"
+  },
     tableContent: {
-        border: "2px solid black"
+        border: "1px solid black"
     },
     tableRow:{
         border: "1px solid black"
